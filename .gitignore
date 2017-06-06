@@ -88,7 +88,6 @@ source/CMakeCache.txt
 source/CMakeFiles/
 source/Makefile
 source/cmake_install.cmake
-source/demo
 source/visionary_source
 test/CMakeCache.txt
 test/CMakeFiles/
@@ -98,5 +97,5 @@ test/cmake_install.cmake
 test/googletest-build/
 test/googletest-download/
 test/googletest-src/
-test/tests
+test/visionary-test
 Testing/

@@ -3,5 +3,7 @@ project(visionary)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp)
-add_executable(visionary ${SOURCE_FILES})
+add_subdirectory(src)
+
+enable_testing()
+add_subdirectory(test)
