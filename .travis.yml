@@ -15,7 +15,6 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then rm -rf /usr/local/bin/f2py ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then rm -rf /usr/local/lib/python2.7 ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install opencv3 ; fi
-  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo "export OpenCV_DIR=/usr/local/opt/opencv3/bin" >> ~/.bash_profile ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo 'export PATH="/usr/local/opt/opencv3/bin:$PATH"' >> ~/.bash_profile ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source ~/.bash_profile ; fi
   # linux commands
