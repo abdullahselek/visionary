@@ -11,4 +11,4 @@ set(SOURCE_FILES ../main.cpp)
 add_executable(visionary ${SOURCE_FILES})
 
 include_directories(${OpenCV_INCLUDE_DIRS})
-#target_link_libraries(OpenCV ${OpenCV_LIBS})
+target_link_libraries(visionary ${OpenCV_LIBS})
