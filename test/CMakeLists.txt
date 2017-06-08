@@ -11,9 +11,17 @@ download_project(PROJ       googletest
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
-include_directories(../source/)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ../cmake/)
+find_package(OpenCV REQUIRED)
+
+include_directories(${OpenCV_INCLUDE_DIRS})
+include_directories(../src/)
 
 # Add test cpp file
-add_executable(visionary-test main.cpp)
-target_link_libraries(visionary-test gtest gmock_main)
-add_test(visionary-test visionary-test COMMAND Test)
+add_executable(visionary-test main.cpp tests-motiondetector.cpp)
+include_directories(${OpenCV_INCLUDE_DIRS})
+target_link_libraries(visionary-test gtest gmock_main ${OpenCV_LIBS})
+add_test(NAME visionary-test COMMAND visionary-test)

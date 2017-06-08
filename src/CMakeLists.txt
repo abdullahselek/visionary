@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ../cmake/)
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-set(SOURCE_FILES ../main.cpp)
+set(SOURCE_FILES ../main.cpp motion-detector.h motion-detector.cpp)
 
 add_executable(visionary ${SOURCE_FILES})
 
