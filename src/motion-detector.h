@@ -11,26 +11,41 @@
 class MotionDetector {
 
 public:
-    MotionDetector(std::string videoPath);
-    ~MotionDetector();
+    inline MotionDetector(std::string videoPath);
+    inline MotionDetector(int ceil);
+    inline ~MotionDetector();
 
-    std::string getVideoPath();
+    inline std::string getVideoPath();
+    inline void openCamera();
 
 private:
     std::string videoPath;
+    int ceil;
+    CvCapture *capture;
 
 };
 
-MotionDetector::MotionDetector(std::string videoPath) {
+inline MotionDetector::MotionDetector(std::string videoPath) {
     this->videoPath = videoPath;
 }
 
-MotionDetector::~MotionDetector() {
+inline MotionDetector::MotionDetector(int ceil) {
+    this->ceil = ceil;
+}
+
+inline MotionDetector::~MotionDetector() {
 
 }
 
-std::string MotionDetector::getVideoPath() {
+inline std::string MotionDetector::getVideoPath() {
     return videoPath;
+}
+
+inline void MotionDetector::openCamera() {
+    this->capture = cvCreateCameraCapture(CV_CAP_ANY);
+    cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH, 1280);
+    cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_HEIGHT, 720);
+    cv::namedWindow("Target", 1);
 }
 
 #endif //VISIONARY_MOTION_DETECTOR_H

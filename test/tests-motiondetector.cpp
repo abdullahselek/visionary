@@ -34,9 +34,14 @@ TEST_F(MotionDetectorTests, Initiate) {
     EXPECT_TRUE(motionDetector->getVideoPath().empty());
 }
 
-TEST_F(MotionDetectorTests, InitiateWithValidParameter) {
+TEST_F(MotionDetectorTests, InitiateWithVideoPath) {
     std::string videoPath("/Users/admin/video.mp4");
     motionDetector = new MotionDetector(videoPath);
     EXPECT_TRUE(motionDetector != nullptr);
     EXPECT_FALSE(motionDetector->getVideoPath().empty());
+}
+
+TEST_F(MotionDetectorTests, InitiateWithCeil) {
+    motionDetector = new MotionDetector(15);
+    EXPECT_TRUE(motionDetector != nullptr);
 }
