@@ -45,3 +45,8 @@ TEST_F(MotionDetectorTests, InitiateWithCeil) {
     motionDetector = new MotionDetector(15);
     EXPECT_TRUE(motionDetector != nullptr);
 }
+
+TEST_F(MotionDetectorTests, OpenCamera) {
+    motionDetector = new MotionDetector(15);
+    EXPECT_FALSE(motionDetector->getCapture() == nullptr);
+}

@@ -17,6 +17,7 @@ public:
 
     inline std::string getVideoPath();
     inline void openCamera();
+    inline CvCapture * getCapture();
 
 private:
     std::string videoPath;
@@ -46,6 +47,10 @@ inline void MotionDetector::openCamera() {
     cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH, 1280);
     cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_HEIGHT, 720);
     cv::namedWindow("Target", 1);
+}
+
+inline CvCapture * MotionDetector::getCapture() {
+    return this->capture;
 }
 
 #endif //VISIONARY_MOTION_DETECTOR_H
