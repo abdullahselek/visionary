@@ -24,8 +24,10 @@ private:
     const char *videoPath;
     int ceil;
     CvCapture *capture;
-
+    static const std::string TARGET;
 };
+
+const std::string MotionDetector::TARGET = "Target";
 
 inline MotionDetector::MotionDetector(const char * videoPath) {
     this->videoPath = videoPath;
@@ -49,7 +51,7 @@ inline void MotionDetector::openCamera() {
     } else {
         this->capture = cvCreateCameraCapture(CV_CAP_ANY);
     }
-    cv::namedWindow("Target", 1);
+    cv::namedWindow(TARGET, 1);
 }
 
 inline CvCapture * MotionDetector::getCapture() {
@@ -119,7 +121,7 @@ inline void MotionDetector::run() {
         // 1 contours drawn, 2 internal contours as well, 3 ...
         int levels = 1;
         cvDrawContours(colorImage, backcontours, red, green, levels, 2, CV_FILLED);
-        cvShowImage("Target", colorImage);
+        cvShowImage(TARGET.c_str(), colorImage);
         int c = cvWaitKey(7) % 0x100;
         if (c == 27 || c == 10) {
             break;
