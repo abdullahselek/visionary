@@ -35,8 +35,7 @@ TEST_F(MotionDetectorTests, Initiate) {
 }
 
 TEST_F(MotionDetectorTests, InitiateWithVideoPath) {
-    std::string videoPath("/Users/admin/video.mp4");
-    motionDetector = new MotionDetector(videoPath);
+    motionDetector = new MotionDetector("/Users/admin/video.mp4");
     EXPECT_TRUE(motionDetector != nullptr);
     EXPECT_FALSE(motionDetector->getVideoPath().empty());
 }
@@ -46,7 +45,13 @@ TEST_F(MotionDetectorTests, InitiateWithCeil) {
     EXPECT_TRUE(motionDetector != nullptr);
 }
 
-TEST_F(MotionDetectorTests, OpenCamera) {
+TEST_F(MotionDetectorTests, Capture) {
     motionDetector = new MotionDetector(15);
+    EXPECT_FALSE(motionDetector->getCapture() == nullptr);
+}
+
+TEST_F(MotionDetectorTests, CaptureAfterOpenCamera) {
+    motionDetector = new MotionDetector(15);
+    motionDetector->openCamera();
     EXPECT_FALSE(motionDetector->getCapture() == nullptr);
 }

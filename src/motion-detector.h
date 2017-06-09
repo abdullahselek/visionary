@@ -11,7 +11,7 @@
 class MotionDetector {
 
 public:
-    inline MotionDetector(std::string videoPath);
+    inline MotionDetector(const char * videoPath);
     inline MotionDetector(int ceil);
     inline ~MotionDetector();
 
@@ -20,13 +20,13 @@ public:
     inline CvCapture * getCapture();
 
 private:
-    std::string videoPath;
+    const char *videoPath;
     int ceil;
     CvCapture *capture;
 
 };
 
-inline MotionDetector::MotionDetector(std::string videoPath) {
+inline MotionDetector::MotionDetector(const char * videoPath) {
     this->videoPath = videoPath;
 }
 
@@ -43,9 +43,11 @@ inline std::string MotionDetector::getVideoPath() {
 }
 
 inline void MotionDetector::openCamera() {
-    this->capture = cvCreateCameraCapture(CV_CAP_ANY);
-    cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH, 1280);
-    cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_HEIGHT, 720);
+    if (this->videoPath == nullptr) {
+        this->capture = cvCreateFileCapture(this->videoPath);
+    } else {
+        this->capture = cvCreateCameraCapture(CV_CAP_ANY);
+    }
     cv::namedWindow("Target", 1);
 }
 
