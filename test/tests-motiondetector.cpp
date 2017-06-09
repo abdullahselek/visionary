@@ -29,13 +29,14 @@ public:
 };
 
 TEST_F(MotionDetectorTests, Initiate) {
-    motionDetector = new MotionDetector("");
+    motionDetector = new MotionDetector("", 15);
     EXPECT_TRUE(motionDetector != nullptr);
     EXPECT_TRUE(motionDetector->getVideoPath().empty());
 }
 
 TEST_F(MotionDetectorTests, InitiateWithVideoPath) {
-    motionDetector = new MotionDetector("/Users/admin/video.mp4");
+    const char *videoPath = "/Users/admin/video.mp4";
+    motionDetector = new MotionDetector(videoPath, 15);
     EXPECT_TRUE(motionDetector != nullptr);
     EXPECT_FALSE(motionDetector->getVideoPath().empty());
 }

@@ -11,7 +11,7 @@
 class MotionDetector {
 
 public:
-    inline MotionDetector(const char * videoPath);
+    inline MotionDetector(const char * videoPath, int ceil);
     inline MotionDetector(int ceil);
     inline ~MotionDetector();
 
@@ -29,8 +29,9 @@ private:
 
 const std::string MotionDetector::TARGET = "Target";
 
-inline MotionDetector::MotionDetector(const char * videoPath) {
+inline MotionDetector::MotionDetector(const char * videoPath, int ceil) {
     this->videoPath = videoPath;
+    this->ceil = ceil;
 }
 
 inline MotionDetector::MotionDetector(int ceil) {
