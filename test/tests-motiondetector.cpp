@@ -17,7 +17,7 @@ protected:
     }
 
     virtual void TearDown() {
-
+        delete motionDetector;
     }
 
 public:
