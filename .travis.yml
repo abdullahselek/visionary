@@ -18,6 +18,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo 'export PATH="/usr/local/opt/opencv3/bin:$PATH"' >> ~/.bash_profile ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source ~/.bash_profile ; fi
   # linux commands
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pwd ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install build-essential ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install cmake libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd ~ ; fi
@@ -31,6 +32,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo make install ; fi
 
 before_script:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd .. ; cd .. ; cd build/abdullahselek/visionary/ ; fi
   - cmake .
 
 script:
