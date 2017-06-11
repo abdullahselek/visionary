@@ -66,3 +66,15 @@ TEST_F(MotionDetectorTests, CreateCapture) {
     CvCapture *capture = mockMotionDetector.createCapture();
     EXPECT_TRUE(capture != nullptr);
 }
+
+TEST_F(MotionDetectorTests, OpenCamera) {
+    const char *currentPath = currentDirectory();
+    const char *videoPath = "/resources/SampleVideo.mp4";
+    std::string fullPath(currentPath);
+    replaceStringInPlace(fullPath, "/test", "");
+    fullPath += videoPath;
+    std::cout << "Video File Path " << fullPath << std::endl;
+    motionDetector = new MotionDetector(fullPath.c_str(), 15);
+    motionDetector->openCamera();
+    EXPECT_TRUE(motionDetector->getCapture() != nullptr);
+}
