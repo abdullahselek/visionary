@@ -3,7 +3,10 @@
 //
 
 #include "gtest/gtest.h"
+#include "opencv2/opencv.hpp"
 #include "../src/motion-detector.h"
+#include "mock-motion-detector.h"
+#include "utils.h"
 
 class MotionDetectorTests : public ::testing::Test {
 
@@ -17,7 +20,7 @@ protected:
     }
 
     virtual void TearDown() {
-        delete motionDetector;
+
     }
 
 public:
@@ -32,6 +35,7 @@ TEST_F(MotionDetectorTests, Initiate) {
     motionDetector = new MotionDetector("", 15);
     EXPECT_TRUE(motionDetector != nullptr);
     EXPECT_TRUE(motionDetector->getVideoPath().empty());
+    delete motionDetector;
 }
 
 TEST_F(MotionDetectorTests, InitiateWithVideoPath) {
@@ -39,20 +43,25 @@ TEST_F(MotionDetectorTests, InitiateWithVideoPath) {
     motionDetector = new MotionDetector(videoPath, 15);
     EXPECT_TRUE(motionDetector != nullptr);
     EXPECT_FALSE(motionDetector->getVideoPath().empty());
+    delete motionDetector;
 }
 
 TEST_F(MotionDetectorTests, InitiateWithCeil) {
     motionDetector = new MotionDetector(15);
     EXPECT_TRUE(motionDetector != nullptr);
+    delete motionDetector;
 }
 
-TEST_F(MotionDetectorTests, Capture) {
-    motionDetector = new MotionDetector(15);
-    EXPECT_FALSE(motionDetector->getCapture() == nullptr);
-}
-
-TEST_F(MotionDetectorTests, CaptureAfterOpenCamera) {
-    motionDetector = new MotionDetector(15);
-    motionDetector->openCamera();
-    EXPECT_FALSE(motionDetector->getCapture() == nullptr);
+TEST_F(MotionDetectorTests, CreateCapture) {
+    MockMotionDetector mockMotionDetector;
+    const char *currentPath = currentDirectory();
+    const char *videoPath = "/resources/SampleVideo.mp4";
+    std::string fullPath(currentPath);
+    fullPath += videoPath;
+    std::cout << "Video File Path " << fullPath << std::endl;
+    EXPECT_CALL(mockMotionDetector, createCapture())
+            .Times(1)
+            .WillOnce(testing::Return(cvCreateFileCapture(fullPath.c_str())));
+    CvCapture *capture = mockMotionDetector.createCapture();
+    EXPECT_TRUE(capture != nullptr);
 }

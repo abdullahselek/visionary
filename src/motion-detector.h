@@ -6,14 +6,16 @@
 #define VISIONARY_MOTION_DETECTOR_H
 
 #include "opencv2/opencv.hpp"
+#include "motion-detector-internal.h"
 #include <string>
 
 class MotionDetector {
 
 public:
+    inline MotionDetector();
     inline MotionDetector(const char * videoPath, int ceil);
     inline MotionDetector(int ceil);
-    inline ~MotionDetector();
+    virtual inline ~MotionDetector();
 
     inline std::string getVideoPath();
     inline void openCamera();
@@ -23,11 +25,16 @@ public:
 private:
     const char *videoPath;
     int ceil;
-    CvCapture *capture;
+    CvCapture *capture = nullptr;
     static const std::string TARGET;
+
 };
 
 const std::string MotionDetector::TARGET = "Target";
+
+inline MotionDetector::MotionDetector() {
+
+}
 
 inline MotionDetector::MotionDetector(const char * videoPath, int ceil) {
     this->videoPath = videoPath;
@@ -47,16 +54,20 @@ inline std::string MotionDetector::getVideoPath() {
 }
 
 inline void MotionDetector::openCamera() {
-    if (this->videoPath == nullptr) {
-        this->capture = cvCreateFileCapture(this->videoPath);
-    } else {
-        this->capture = cvCreateCameraCapture(CV_CAP_ANY);
-    }
+    this->capture = createCapture(this->videoPath);
     cv::namedWindow(TARGET, 1);
 }
 
 inline CvCapture * MotionDetector::getCapture() {
     return this->capture;
+}
+
+CvCapture * createCapture(const char * videoPath) {
+    if (videoPath == nullptr) {
+        return cvCreateFileCapture(videoPath);
+    } else {
+        return cvCreateCameraCapture(CV_CAP_ANY);
+    }
 }
 
 inline void MotionDetector::run() {

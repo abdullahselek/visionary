@@ -21,7 +21,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories(../src/)
 
 # Add test cpp file
-add_executable(visionary-test main.cpp tests-motiondetector.cpp)
+add_executable(visionary-test main.cpp tests-motiondetector.cpp mock-motion-detector.h utils.h)
 include_directories(${OpenCV_INCLUDE_DIRS})
 target_link_libraries(visionary-test gtest gmock_main ${OpenCV_LIBS})
 add_test(NAME visionary-test COMMAND visionary-test)
