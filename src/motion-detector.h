@@ -17,6 +17,8 @@ public:
     inline MotionDetector(int ceil);
     virtual inline ~MotionDetector();
 
+    inline void setVideoPath(const char * videoPath);
+    inline void setCeil(int ceil);
     inline std::string getVideoPath();
     inline void openCamera();
     inline CvCapture * getCapture();
@@ -46,6 +48,14 @@ inline MotionDetector::MotionDetector(int ceil) {
 
 inline MotionDetector::~MotionDetector() {
 
+}
+
+inline void MotionDetector::setVideoPath(const char * videoPath) {
+    this->videoPath = videoPath;
+}
+
+inline void MotionDetector::setCeil(int ceil) {
+    this->ceil = ceil;
 }
 
 inline std::string MotionDetector::getVideoPath() {
