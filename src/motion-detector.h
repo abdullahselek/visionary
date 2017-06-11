@@ -63,7 +63,7 @@ inline CvCapture * MotionDetector::getCapture() {
 }
 
 CvCapture * createCapture(const char * videoPath) {
-    if (videoPath == nullptr) {
+    if (videoPath != nullptr) {
         return cvCreateFileCapture(videoPath);
     } else {
         return cvCreateCameraCapture(CV_CAP_ANY);
