@@ -96,7 +96,7 @@ inline void MotionDetector::run() {
         IplImage *colorImage = cvQueryFrame(this->capture);
         // Remove false positives
         cvSmooth(colorImage, colorImage, CV_GAUSSIAN, 3, 0);
-        IplImage *temp = nullptr;
+        IplImage *temp;
         // For the first time put values in difference, temp and movingAverage
         if (difference == nullptr) {
             difference = cvCloneImage(colorImage);
