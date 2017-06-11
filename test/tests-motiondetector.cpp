@@ -57,6 +57,7 @@ TEST_F(MotionDetectorTests, CreateCapture) {
     const char *currentPath = currentDirectory();
     const char *videoPath = "/resources/SampleVideo.mp4";
     std::string fullPath(currentPath);
+    replaceStringInPlace(fullPath, "/test", "");
     fullPath += videoPath;
     std::cout << "Video File Path " << fullPath << std::endl;
     EXPECT_CALL(mockMotionDetector, createCapture())
