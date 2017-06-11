@@ -26,11 +26,10 @@ private:
     const char *videoPath;
     int ceil;
     CvCapture *capture = nullptr;
-    static const std::string TARGET;
 
 };
 
-const std::string MotionDetector::TARGET = "Target";
+static const std::string TARGET = "Target";
 
 inline MotionDetector::MotionDetector() {
 
@@ -62,7 +61,7 @@ inline CvCapture * MotionDetector::getCapture() {
     return this->capture;
 }
 
-CvCapture * createCapture(const char * videoPath) {
+inline CvCapture * createCapture(const char * videoPath) {
     if (videoPath != nullptr) {
         return cvCreateFileCapture(videoPath);
     } else {

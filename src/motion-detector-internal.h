@@ -7,6 +7,6 @@
 
 #include "opencv2/opencv.hpp"
 
-CvCapture * createCapture(const char * videoPath);
+inline CvCapture * createCapture(const char * videoPath);
 
 #endif //VISIONARY_MOTION_DETECTOR_INTERNAL_H
