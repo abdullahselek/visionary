@@ -129,7 +129,7 @@ inline void MotionDetector::run() {
         // CvSeq *backcontours = contours;
         // For all contours compute the area
         double largestArea = 0.0;
-        CvRect boundingRect = NULL;
+        CvRect boundingRect;
         while (contours) {
             // currentSurface += cvContourArea(contours);
             // contours = contours->h_next;
@@ -156,8 +156,8 @@ inline void MotionDetector::run() {
         // 1 contours drawn, 2 internal contours as well, 3 ...
         // int levels = 1;
         // cvDrawContours(colorImage, backcontours, red, green, levels, 2, CV_FILLED);
-        CvPoint point1(boundingRect.x, boundingRect.y);
-        CvPoint point2(boundingRect.x + boundingRect.width, boundingRect.y + boundingRect.height);
+        CvPoint point1 = cvPoint(boundingRect.x, boundingRect.y);
+        CvPoint point2 = cvPoint(boundingRect.x + boundingRect.width, boundingRect.y + boundingRect.height);
         cvRectangle(colorImage, point1, point2, green, 2);
         cvShowImage(TARGET.c_str(), colorImage);
         int c = cvWaitKey(7) % 0x100;
