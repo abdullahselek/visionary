@@ -20,6 +20,7 @@ public:
     inline void setVideoPath(const char * videoPath);
     inline void setCeil(int ceil);
     inline const char * getVideoPath();
+    inline int getCeil();
     inline void openCamera();
     inline CvCapture * getCapture();
     inline void run();
@@ -60,6 +61,10 @@ inline void MotionDetector::setCeil(int ceil) {
 
 inline const char * MotionDetector::getVideoPath() {
     return videoPath;
+}
+
+inline int MotionDetector::getCeil() {
+    return ceil;
 }
 
 inline void MotionDetector::openCamera() {

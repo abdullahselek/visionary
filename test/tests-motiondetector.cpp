@@ -85,3 +85,10 @@ TEST_F(MotionDetectorTests, SetVideoPath) {
     detector.setVideoPath(videoPath);
     EXPECT_EQ(detector.getVideoPath(), videoPath);
 }
+
+TEST_F(MotionDetectorTests, SetCeil) {
+    MotionDetector detector;
+    int ceil = 15;
+    detector.setCeil(15);
+    EXPECT_EQ(detector.getCeil(), ceil);
+}
