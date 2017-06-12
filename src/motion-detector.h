@@ -126,12 +126,21 @@ inline void MotionDetector::run() {
         CvSeq *contours = 0;
         int counterCount = cvFindContours(greyImage, storage, &contours, sizeof(CvContour), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
         // Save contours
-        CvSeq *backcontours = contours;
+        // CvSeq *backcontours = contours;
         // For all contours compute the area
+        double largestArea = 0.0;
+        CvRect boundingRect = NULL;
         while (contours) {
-            currentSurface += cvContourArea(contours);
+            // currentSurface += cvContourArea(contours);
+            // contours = contours->h_next;
+            double area = cvContourArea(contours);
+            if (area > largestArea) {
+                largestArea = area;
+                boundingRect = cvBoundingRect(contours);
+            }
             contours = contours->h_next;
         }
+
         // Calculate the average of contour area on the total size
         int average = currentSurface * 100;
         if (average > this->ceil) {
@@ -145,8 +154,11 @@ inline void MotionDetector::run() {
         // Green internal contours
         CvScalar green = cvScalar(0.0, 255.0, 0.0);
         // 1 contours drawn, 2 internal contours as well, 3 ...
-        int levels = 1;
-        cvDrawContours(colorImage, backcontours, red, green, levels, 2, CV_FILLED);
+        // int levels = 1;
+        // cvDrawContours(colorImage, backcontours, red, green, levels, 2, CV_FILLED);
+        CvPoint point1(boundingRect.x, boundingRect.y);
+        CvPoint point2(boundingRect.x + boundingRect.width, boundingRect.y + boundingRect.height);
+        cvRectangle(colorImage, point1, point2, green, 2);
         cvShowImage(TARGET.c_str(), colorImage);
         int c = cvWaitKey(7) % 0x100;
         if (c == 27 || c == 10) {
