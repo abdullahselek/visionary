@@ -27,7 +27,7 @@ public:
 
 private:
     const char *videoPath;
-    int ceil;
+    int ceil = 0;
     CvCapture *capture = nullptr;
 
 };
