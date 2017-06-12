@@ -34,7 +34,7 @@ public:
 TEST_F(MotionDetectorTests, Initiate) {
     motionDetector = new MotionDetector("", 15);
     EXPECT_TRUE(motionDetector != nullptr);
-    EXPECT_TRUE(motionDetector->getVideoPath().empty());
+    EXPECT_EQ(motionDetector->getVideoPath(), "");
     delete motionDetector;
 }
 
@@ -42,7 +42,7 @@ TEST_F(MotionDetectorTests, InitiateWithVideoPath) {
     const char *videoPath = "/Users/admin/video.mp4";
     motionDetector = new MotionDetector(videoPath, 15);
     EXPECT_TRUE(motionDetector != nullptr);
-    EXPECT_FALSE(motionDetector->getVideoPath().empty());
+    EXPECT_EQ(motionDetector->getVideoPath(), videoPath);
     delete motionDetector;
 }
 
