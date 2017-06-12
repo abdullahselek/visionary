@@ -78,3 +78,10 @@ TEST_F(MotionDetectorTests, OpenCamera) {
     motionDetector->openCamera();
     EXPECT_TRUE(motionDetector->getCapture() != nullptr);
 }
+
+TEST_F(MotionDetectorTests, SetVideoPath) {
+    MotionDetector detector;
+    const char * videoPath = "/resources/SampleVideo.mp4";
+    detector.setVideoPath(videoPath);
+    EXPECT_EQ(detector.getVideoPath(), videoPath);
+}
