@@ -14,7 +14,17 @@
     #define GetCurrentDir getcwd
 #endif
 
-const char * currentDirectory() {
+class Utils {
+
+public:
+    inline static const char * currentDirectory();
+    inline static void replaceStringInPlace(std::string& subject,
+                              const std::string& search,
+                              const std::string& replace);
+
+};
+
+inline const char * Utils::currentDirectory() {
     char currentPath[FILENAME_MAX];
     if (!GetCurrentDir(currentPath, sizeof(currentPath))) {
         return nullptr;
@@ -24,7 +34,7 @@ const char * currentDirectory() {
     return path.c_str();
 }
 
-void replaceStringInPlace(std::string& subject,
+inline void Utils::replaceStringInPlace(std::string& subject,
                           const std::string& search,
                           const std::string& replace) {
     size_t pos = 0;

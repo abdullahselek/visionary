@@ -54,10 +54,10 @@ TEST_F(MotionDetectorTests, InitiateWithCeil) {
 
 TEST_F(MotionDetectorTests, CreateCapture) {
     MockMotionDetector mockMotionDetector;
-    const char *currentPath = currentDirectory();
+    const char *currentPath = Utils::currentDirectory();
     const char *videoPath = "/resources/SampleVideo.mp4";
     std::string fullPath(currentPath);
-    replaceStringInPlace(fullPath, "/test", "");
+    Utils::replaceStringInPlace(fullPath, "/test", "");
     fullPath += videoPath;
     std::cout << "Video File Path " << fullPath << std::endl;
     EXPECT_CALL(mockMotionDetector, createCapture())
@@ -68,10 +68,10 @@ TEST_F(MotionDetectorTests, CreateCapture) {
 }
 
 TEST_F(MotionDetectorTests, OpenCamera) {
-    const char *currentPath = currentDirectory();
+    const char *currentPath = Utils::currentDirectory();
     const char *videoPath = "/resources/SampleVideo.mp4";
     std::string fullPath(currentPath);
-    replaceStringInPlace(fullPath, "/test", "");
+    Utils::replaceStringInPlace(fullPath, "/test", "");
     fullPath += videoPath;
     std::cout << "Video File Path " << fullPath << std::endl;
     motionDetector = new MotionDetector(fullPath.c_str(), 15);
