@@ -34,12 +34,19 @@ TEST_F(FaceDetectorTests, Instantiate) {
     EXPECT_TRUE(faceDetector != nullptr);
 }
 
-TEST_F(FaceDetectorTests, InstantiateWithCascadePath) {
+TEST_F(FaceDetectorTests, InstantiateWithParameters) {
     const char *currentPath = Utils::currentDirectory();
+
     const char *cascadePath = "/haarcascades/haarcascade_profileface.xml";
-    std::string fullPath(currentPath);
-    Utils::replaceStringInPlace(fullPath, "/test", "");
-    fullPath += cascadePath;
-    faceDetector = new FaceDetector(fullPath.c_str());
+    std::string fullCascadePath(currentPath);
+    Utils::replaceStringInPlace(fullCascadePath, "/test", "");
+    fullCascadePath += cascadePath;
+
+    const char *videoPath = "/resources/SampleVideo.mp4";
+    std::string fullVideoPath(currentPath);
+    Utils::replaceStringInPlace(fullVideoPath, "/test", "");
+    fullVideoPath += videoPath;
+
+    faceDetector = new FaceDetector(fullVideoPath, fullCascadePath.c_str());
     EXPECT_TRUE(faceDetector != nullptr);
 }
