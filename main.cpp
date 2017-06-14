@@ -20,6 +20,7 @@ int main(int argc, char* argv[]) {
             fullCascadePath += cascadePath;
 
             FaceDetector faceDetector(fullCascadePath.c_str(), nullptr);
+            faceDetector.openCamera();
             faceDetector.run();
         }
     }

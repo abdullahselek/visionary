@@ -13,6 +13,7 @@ public:
     FaceDetector();
     FaceDetector(std::string cascadePath, const char * videoPath);
     ~FaceDetector();
+    inline void openCamera();
     void run();
 
 private:
@@ -22,7 +23,6 @@ private:
     cv::CascadeClassifier faceCascade;
     static const std::string TARGET;
 
-    inline void openCamera();
     inline CvCapture * createCapture(const char * videoPath);
 
 };
@@ -63,7 +63,6 @@ inline void FaceDetector::run() {
         return;
     }
 
-    openCamera();
     CvScalar green = cvScalar(0.0, 255.0, 0.0);
 
     while (true) {
