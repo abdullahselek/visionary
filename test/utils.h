@@ -5,6 +5,7 @@
 #ifndef VISIONARY_UTILS_H
 #define VISIONARY_UTILS_H
 
+#include <thread>
 #include <stdio.h>  /* defines FILENAME_MAX */
 #ifdef WINDOWS
     #include <direct.h>
@@ -21,6 +22,7 @@ public:
     inline static void replaceStringInPlace(std::string& subject,
                               const std::string& search,
                               const std::string& replace);
+    inline static void sleep(int seconds);
 
 };
 
@@ -42,6 +44,11 @@ inline void Utils::replaceStringInPlace(std::string& subject,
         subject.replace(pos, search.length(), replace);
         pos += replace.length();
     }
+}
+
+inline void Utils::sleep(int seconds) {
+    std::chrono::milliseconds timespan(seconds); // or whatever
+    std::this_thread::sleep_for(timespan);
 }
 
 #endif //VISIONARY_UTILS_H
