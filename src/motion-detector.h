@@ -86,6 +86,10 @@ inline CvCapture * createCapture(const char * videoPath) {
 
 inline void MotionDetector::run() {
     IplImage *frame = cvQueryFrame(this->capture);
+    if (!frame) {
+        std::cout << "Could not capture frame!" << std::endl;
+        exit(EXIT_FAILURE);
+    }
     int width = frame->width;
     int height = frame->height;
     // Surface area of the image
@@ -96,6 +100,8 @@ inline void MotionDetector::run() {
     IplImage *greyImage = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);
     IplImage *movingAverage = cvCreateImage(cvGetSize(frame), IPL_DEPTH_32F, 3);
     IplImage *difference = nullptr;
+
+    CvScalar green = cvScalar(0.0, 255.0, 0.0);
 
     while (true) {
         IplImage *colorImage = cvQueryFrame(this->capture);
@@ -124,42 +130,27 @@ inline void MotionDetector::run() {
         // Find contours
         CvMemStorage *storage = cvCreateMemStorage(0);
         CvSeq *contours = 0;
-        int counterCount = cvFindContours(greyImage, storage, &contours, sizeof(CvContour), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
-        // Save contours
-        // CvSeq *backcontours = contours;
+        cvFindContours(greyImage, storage, &contours, sizeof(CvContour), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
         // For all contours compute the area
-        double largestArea = 0.0;
-        CvRect boundingRect;
         while (contours) {
-            // currentSurface += cvContourArea(contours);
-            // contours = contours->h_next;
-            double area = cvContourArea(contours);
-            if (area > largestArea) {
-                largestArea = area;
-                boundingRect = cvBoundingRect(contours);
-            }
+            currentSurface += cvContourArea(contours);
+            CvRect boundingRect = cvBoundingRect(contours);
+            CvPoint point1 = cvPoint(boundingRect.x, boundingRect.y);
+            CvPoint point2 = cvPoint(boundingRect.x + boundingRect.width, boundingRect.y + boundingRect.height);
+            cvRectangle(colorImage, point1, point2, green, 2);
             contours = contours->h_next;
         }
 
         // Calculate the average of contour area on the total size
-        int average = currentSurface * 100;
+        int average = (currentSurface * 100) / surface;
         if (average > this->ceil) {
             std::cout << "Something is moving..." << std::endl;
         }
         // Put back the current surface to 0
         currentSurface = 0;
-        // Draw the contours on the image
-        // Red for external contours
-        CvScalar red = cvScalar(0.0, 0.0, 255.0);
-        // Green internal contours
-        CvScalar green = cvScalar(0.0, 255.0, 0.0);
-        // 1 contours drawn, 2 internal contours as well, 3 ...
-        // int levels = 1;
-        // cvDrawContours(colorImage, backcontours, red, green, levels, 2, CV_FILLED);
-        CvPoint point1 = cvPoint(boundingRect.x, boundingRect.y);
-        CvPoint point2 = cvPoint(boundingRect.x + boundingRect.width, boundingRect.y + boundingRect.height);
-        cvRectangle(colorImage, point1, point2, green, 2);
+        // display image
         cvShowImage(TARGET.c_str(), colorImage);
+        // exit if ESC button pressed
         int c = cvWaitKey(1);
         if (c == 27) {
             break;
