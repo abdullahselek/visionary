@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
             motionDetector.run();
         } else  {
             const char *currentPath = Utils::currentDirectory();
-            const char *cascadePath = "/haarcascades/haarcascade_frontalface_alt.xml";
+            const char *cascadePath = "/haarcascades/haarcascade_frontalface_alt2.xml";
             std::string fullCascadePath(currentPath);
             Utils::replaceStringInPlace(fullCascadePath, "/src", "");
             fullCascadePath += cascadePath;
