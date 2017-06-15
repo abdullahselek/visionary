@@ -16,6 +16,7 @@ public:
     ~EyeDetector();
 
     void setCascadePath(std::string cascadePath);
+    bool prepare();
 
 private:
     std::string cascadePath;
@@ -48,6 +49,16 @@ inline EyeDetector::~EyeDetector() {
 
 void EyeDetector::setCascadePath(std::string cascadePath) {
     this->cascadePath = cascadePath;
+}
+
+bool EyeDetector::prepare() {
+    assert(!cascadePath.empty());
+    this->eyeCascade = cv::CascadeClassifier(this->cascadePath);
+    if (this->eyeCascade.empty()) {
+        std::cout << "Could not load cascade classifier!" << std::endl;
+        return false;
+    }
+    return true;
 }
 
 #endif //VISIONARY_EYE_DETECTOR_H

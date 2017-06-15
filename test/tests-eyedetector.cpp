@@ -53,3 +53,17 @@ TEST_F(EyeDetectorTests, SetCascadePath) {
     eyeDetector->setCascadePath("");
     delete eyeDetector;
 }
+
+TEST_F(EyeDetectorTests, Prepare) {
+    eyeDetector = new EyeDetector();
+    EXPECT_TRUE(eyeDetector != nullptr);
+
+    const char *currentPath = Utils::currentDirectory();
+    const char *cascadePath = "/haarcascades/haarcascade_eye.xml";
+    std::string fullCascadePath(currentPath);
+    Utils::replaceStringInPlace(fullCascadePath, "/test", "");
+    fullCascadePath += cascadePath;
+
+    eyeDetector->setCascadePath(fullCascadePath.c_str());
+    EXPECT_TRUE(eyeDetector->prepare());
+}
