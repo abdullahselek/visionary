@@ -160,8 +160,8 @@ inline void MotionDetector::run() {
         CvPoint point2 = cvPoint(boundingRect.x + boundingRect.width, boundingRect.y + boundingRect.height);
         cvRectangle(colorImage, point1, point2, green, 2);
         cvShowImage(TARGET.c_str(), colorImage);
-        int c = cvWaitKey(7) % 0x100;
-        if (c == 27 || c == 10) {
+        int c = cvWaitKey(1);
+        if (c == 27) {
             break;
         }
     }
