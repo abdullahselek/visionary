@@ -18,6 +18,7 @@ public:
     inline void setEyeCascadePath(std::string eyeCascadePath);
     inline void setFaceCascadePath(std::string faceCascadePath);
     inline bool prepare();
+    inline void detectInImage();
 
 private:
     std::string eyeCascadePath;
@@ -27,11 +28,11 @@ private:
     CvCapture *capture = nullptr;
     cv::CascadeClassifier eyeCascade;
     cv::CascadeClassifier faceCascade;
-    static const std::string TARGET;
+    static const std::string kTarget;
 
 };
 
-const std::string EyeDetector::TARGET = "Target";
+const std::string EyeDetector::kTarget = "Target";
 
 inline EyeDetector::EyeDetector() {
 
@@ -74,9 +75,54 @@ inline bool EyeDetector::prepare() {
         std::cout << "Could not load face cascade classifier!" << std::endl;
         return false;
     }
+    cv::namedWindow(kTarget, 1);
     return true;
 }
 
+inline void EyeDetector::detectInImage() {
+    if (this->imagePath) {
+        IplImage *image = cvLoadImage(this->imagePath);
+        IplImage *greyImage = cvCreateImage(cvGetSize(image), IPL_DEPTH_8U, 1);
+        cvCvtColor(image, greyImage, CV_RGB2GRAY);
 
+        CvScalar blue = cvScalar(255.0, 0.0, 0.0);
+        CvScalar green = cvScalar(0.0, 255.0, 0.0);
+
+        std::vector<cv::Rect> faces;
+        cv::Mat inputArray = cv::cvarrToMat(greyImage);
+        faceCascade.detectMultiScale(inputArray, faces, 1.1, 5, CV_HAAR_SCALE_IMAGE, cv::Size(50, 50));
+        for (std::vector<cv::Rect>::iterator it = faces.begin() ; it != faces.end(); ++it) {
+            cv::Rect rect = *it;
+            CvPoint point1;
+            point1.x = rect.x;
+            point1.y = rect.y;
+            CvPoint point2;
+            point2.x = rect.x + rect.width;
+            point2.y = rect.y + rect.height;
+            // draw rectangle for the face
+            cvRectangle(image, point1, point2, blue, 2);
+
+            // find eye regions and draw them
+            std::vector<cv::Rect> eyes;
+            eyeCascade.detectMultiScale(inputArray, eyes);
+            for (std::vector<cv::Rect>::iterator it = eyes.begin() ; it != eyes.end(); ++it) {
+                cv::Rect rect = *it;
+
+                CvPoint eyePoint1;
+                eyePoint1.x = rect.x;
+                eyePoint1.y = rect.y;
+
+                CvPoint eyePoint2;
+                eyePoint2.x = rect.x + rect.width;
+                eyePoint2.y = rect.y + rect.height;
+
+                cvRectangle(image, eyePoint1, eyePoint2, green, 1);
+            }
+        }
+
+        cvShowImage(kTarget.c_str(), image);
+        cvWaitKey(0);
+    }
+}
 
 #endif //VISIONARY_EYE_DETECTOR_H
