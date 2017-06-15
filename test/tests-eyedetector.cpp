@@ -30,7 +30,26 @@ public:
 };
 
 TEST_F(EyeDetectorTests, Initiate) {
+    eyeDetector = new EyeDetector();
+    EXPECT_TRUE(eyeDetector != nullptr);
+    delete eyeDetector;
+}
+
+TEST_F(EyeDetectorTests, InitiateWithCascadeAndVideoPath) {
+    eyeDetector = new EyeDetector("", "");
+    EXPECT_TRUE(eyeDetector != nullptr);
+    delete eyeDetector;
+}
+
+TEST_F(EyeDetectorTests, InitiateWithImagePath) {
     eyeDetector = new EyeDetector("");
     EXPECT_TRUE(eyeDetector != nullptr);
+    delete eyeDetector;
+}
+
+TEST_F(EyeDetectorTests, SetCascadePath) {
+    eyeDetector = new EyeDetector();
+    EXPECT_TRUE(eyeDetector != nullptr);
+    eyeDetector->setCascadePath("");
     delete eyeDetector;
 }
