@@ -32,6 +32,7 @@ public:
 TEST_F(FaceDetectorTests, Instantiate) {
     faceDetector = new FaceDetector();
     EXPECT_TRUE(faceDetector != nullptr);
+    delete faceDetector;
 }
 
 TEST_F(FaceDetectorTests, InstantiateWithParameters) {
@@ -49,4 +50,5 @@ TEST_F(FaceDetectorTests, InstantiateWithParameters) {
 
     faceDetector = new FaceDetector(fullVideoPath, fullCascadePath.c_str());
     EXPECT_TRUE(faceDetector != nullptr);
+    delete faceDetector;
 }
