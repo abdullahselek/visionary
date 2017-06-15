@@ -71,10 +71,10 @@ inline void FaceDetector::run() {
             std::cout << "Could not capture frame!" << std::endl;
             exit(EXIT_FAILURE);
         }
-        IplImage *grayImage = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);
-        cvCvtColor(frame, grayImage, CV_RGB2GRAY);
+        IplImage *greyImage = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);
+        cvCvtColor(frame, greyImage, CV_RGB2GRAY);
         std::vector<cv::Rect> faces;
-        cv::Mat inputArray = cv::cvarrToMat(grayImage);
+        cv::Mat inputArray = cv::cvarrToMat(greyImage);
         faceCascade.detectMultiScale(inputArray, faces, 1.1, 5, CV_HAAR_SCALE_IMAGE, cv::Size(30, 30));
         std::cout << "Faces found : " << faces.size() << std::endl;
         for (std::vector<cv::Rect>::iterator it = faces.begin() ; it != faces.end(); ++it) {
@@ -88,6 +88,9 @@ inline void FaceDetector::run() {
             cvRectangle(frame, point1, point2, green, 2);
         }
         cvShowImage(TARGET.c_str(), frame);
+
+        // release grey image
+        cvReleaseImage(&greyImage);
 
         int c = cvWaitKey(1);
         if (c == 27) {
