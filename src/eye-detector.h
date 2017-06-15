@@ -11,19 +11,22 @@ class EyeDetector {
 
 public:
     EyeDetector();
-    EyeDetector(std::string cascadePath, const char *videoPath);
+    EyeDetector(std::string eyeCascadePath, std::string faceCascadePath, const char *videoPath);
     EyeDetector(const char *imagePath);
     ~EyeDetector();
 
-    inline void setCascadePath(std::string cascadePath);
+    inline void setEyeCascadePath(std::string eyeCascadePath);
+    inline void setFaceCascadePath(std::string faceCascadePath);
     inline bool prepare();
 
 private:
-    std::string cascadePath;
+    std::string eyeCascadePath;
+    std::string faceCascadePath;
     const char *videoPath;
     const char *imagePath;
     CvCapture *capture = nullptr;
     cv::CascadeClassifier eyeCascade;
+    cv::CascadeClassifier faceCascade;
     static const std::string TARGET;
 
 };
@@ -34,8 +37,11 @@ inline EyeDetector::EyeDetector() {
 
 }
 
-inline EyeDetector::EyeDetector(std::string cascadePath, const char *videoPath) {
-    this->cascadePath = cascadePath;
+inline EyeDetector::EyeDetector(std::string eyeCascadePath,
+                                std::string faceCascadePath,
+                                const char *videoPath) {
+    this->eyeCascadePath = eyeCascadePath;
+    this->faceCascadePath = faceCascadePath;
     this->videoPath = videoPath;
 }
 
@@ -47,15 +53,25 @@ inline EyeDetector::~EyeDetector() {
 
 }
 
-inline void EyeDetector::setCascadePath(std::string cascadePath) {
-    this->cascadePath = cascadePath;
+inline void EyeDetector::setEyeCascadePath(std::string eyeCascadePath) {
+    this->eyeCascadePath = eyeCascadePath;
+}
+
+inline void EyeDetector::setFaceCascadePath(std::string faceCascadePath) {
+    this->faceCascadePath = faceCascadePath;
 }
 
 inline bool EyeDetector::prepare() {
-    assert(!cascadePath.empty());
-    this->eyeCascade = cv::CascadeClassifier(this->cascadePath);
+    assert(!eyeCascadePath.empty());
+    this->eyeCascade = cv::CascadeClassifier(this->eyeCascadePath);
     if (this->eyeCascade.empty()) {
-        std::cout << "Could not load cascade classifier!" << std::endl;
+        std::cout << "Could not load eye cascade classifier!" << std::endl;
+        return false;
+    }
+    assert(!faceCascadePath.empty());
+    this->faceCascade = cv::CascadeClassifier(this->faceCascadePath);
+    if (this->faceCascade.empty()) {
+        std::cout << "Could not load face cascade classifier!" << std::endl;
         return false;
     }
     return true;

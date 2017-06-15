@@ -36,7 +36,7 @@ TEST_F(EyeDetectorTests, Initiate) {
 }
 
 TEST_F(EyeDetectorTests, InitiateWithCascadeAndVideoPath) {
-    eyeDetector = new EyeDetector("", "");
+    eyeDetector = new EyeDetector("", "", "");
     EXPECT_TRUE(eyeDetector != nullptr);
     delete eyeDetector;
 }
@@ -47,10 +47,10 @@ TEST_F(EyeDetectorTests, InitiateWithImagePath) {
     delete eyeDetector;
 }
 
-TEST_F(EyeDetectorTests, SetCascadePath) {
+TEST_F(EyeDetectorTests, SetEyeCascadePath) {
     eyeDetector = new EyeDetector();
     EXPECT_TRUE(eyeDetector != nullptr);
-    eyeDetector->setCascadePath("");
+    eyeDetector->setEyeCascadePath("");
     delete eyeDetector;
 }
 
@@ -59,11 +59,17 @@ TEST_F(EyeDetectorTests, Prepare) {
     EXPECT_TRUE(eyeDetector != nullptr);
 
     const char *currentPath = Utils::currentDirectory();
-    const char *cascadePath = "/haarcascades/haarcascade_eye.xml";
-    std::string fullCascadePath(currentPath);
-    Utils::replaceStringInPlace(fullCascadePath, "/test", "");
-    fullCascadePath += cascadePath;
+    const char *eyeCascadePath = "/haarcascades/haarcascade_eye.xml";
+    std::string fullEyeCascadePath(currentPath);
+    Utils::replaceStringInPlace(fullEyeCascadePath, "/test", "");
+    fullEyeCascadePath += eyeCascadePath;
 
-    eyeDetector->setCascadePath(fullCascadePath.c_str());
+    const char *faceCascadePath = "/haarcascades/haarcascade_frontalface_alt2.xml";
+    std::string fullFaceCascadePath(currentPath);
+    Utils::replaceStringInPlace(fullFaceCascadePath, "/test", "");
+    fullFaceCascadePath += faceCascadePath;
+
+    eyeDetector->setEyeCascadePath(fullEyeCascadePath.c_str());
+    eyeDetector->setFaceCascadePath(fullFaceCascadePath.c_str());
     EXPECT_TRUE(eyeDetector->prepare());
 }
