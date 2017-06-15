@@ -62,11 +62,15 @@ inline void FaceDetector::run() {
     if (this->faceCascade.empty()) {
         return;
     }
-
+    // color scalar for drawing rectangle
     CvScalar green = cvScalar(0.0, 255.0, 0.0);
 
     while (true) {
         IplImage *frame = cvQueryFrame(this->capture);
+        if (!frame) {
+            std::cout << "Could not capture frame!" << std::endl;
+            exit(EXIT_FAILURE);
+        }
         IplImage *grayImage = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);
         cvCvtColor(frame, grayImage, CV_RGB2GRAY);
         std::vector<cv::Rect> faces;
