@@ -72,6 +72,7 @@ inline void FaceDetector::run() {
         std::vector<cv::Rect> faces;
         cv::Mat inputArray = cv::cvarrToMat(grayImage);
         faceCascade.detectMultiScale(inputArray, faces, 1.1, 5, CV_HAAR_SCALE_IMAGE, cv::Size(30, 30));
+        std::cout << "Faces found : " << faces.size() << std::endl;
         for (std::vector<cv::Rect>::iterator it = faces.begin() ; it != faces.end(); ++it) {
             cv::Rect rect = *it;
             CvPoint point1;
@@ -81,12 +82,12 @@ inline void FaceDetector::run() {
             point2.x = rect.x + rect.width;
             point2.y = rect.y + rect.height;
             cvRectangle(frame, point1, point2, green, 2);
-            cvShowImage(TARGET.c_str(), frame);
+        }
+        cvShowImage(TARGET.c_str(), frame);
 
-            int c = cvWaitKey(1);
-            if (c == 27 || c == 10) {
-                break;
-            }
+        int c = cvWaitKey(1);
+        if (c == 27) {
+            break;
         }
     }
 }
