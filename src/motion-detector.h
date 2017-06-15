@@ -48,7 +48,8 @@ inline MotionDetector::MotionDetector(int ceil) {
 }
 
 inline MotionDetector::~MotionDetector() {
-
+    cvReleaseCapture(&capture);
+    cvDestroyAllWindows();
 }
 
 inline void MotionDetector::setVideoPath(const char * videoPath) {
@@ -155,6 +156,12 @@ inline void MotionDetector::run() {
         if (c == 27) {
             break;
         }
+    }
+
+    cvReleaseImage(&greyImage);
+    cvReleaseImage(&movingAverage);
+    if (difference) {
+        cvReleaseImage(&difference);
     }
 }
 
