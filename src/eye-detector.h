@@ -55,7 +55,8 @@ inline EyeDetector::EyeDetector(const char *imagePath) {
 }
 
 inline EyeDetector::~EyeDetector() {
-
+    cvReleaseCapture(&capture);
+    cvDestroyAllWindows();
 }
 
 inline void EyeDetector::setEyeCascadePath(std::string eyeCascadePath) {
