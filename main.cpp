@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
             Utils::replaceStringInPlace(fullCascadePath, "/src", "");
             fullCascadePath += cascadePath;
 
-            FaceDetector faceDetector(fullCascadePath.c_str(), nullptr);
+            FaceDetector faceDetector(fullCascadePath.c_str(), source::type::video, nullptr);
             faceDetector.openCamera();
             faceDetector.run();
         } else if (run == "ei") {

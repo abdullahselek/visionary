@@ -48,7 +48,7 @@ TEST_F(FaceDetectorTests, InstantiateWithParameters) {
     Utils::replaceStringInPlace(fullVideoPath, "/test", "");
     fullVideoPath += videoPath;
 
-    faceDetector = new FaceDetector(fullVideoPath, fullCascadePath.c_str());
+    faceDetector = new FaceDetector(fullVideoPath, source::type::video, fullCascadePath.c_str());
     EXPECT_TRUE(faceDetector != nullptr);
     delete faceDetector;
 }

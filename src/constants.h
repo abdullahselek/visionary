@@ -11,4 +11,13 @@ namespace window {
 
 }
 
+namespace source {
+
+    enum type {
+        image,
+        video
+    };
+
+}
+
 #endif //VISIONARY_CONSTANTS_H

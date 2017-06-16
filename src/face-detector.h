@@ -13,14 +13,16 @@ class FaceDetector {
 
 public:
     FaceDetector();
-    FaceDetector(std::string cascadePath, const char * videoPath);
+    FaceDetector(std::string cascadePath,
+                 source::type sourceType,
+                 const char *sourcePath);
     ~FaceDetector();
     inline void openCamera();
     void run();
 
 private:
     std::string cascadePath;
-    const char *videoPath;
+    const char *sourcePath;
     CvCapture *capture = nullptr;
     cv::CascadeClassifier faceCascade;
 
@@ -30,9 +32,15 @@ inline FaceDetector::FaceDetector() {
 
 }
 
-inline FaceDetector::FaceDetector(std::string cascadePath, const char * videoPath) {
+inline FaceDetector::FaceDetector(std::string cascadePath,
+                                  source::type sourceType,
+                                  const char *sourcePath) {
     this->cascadePath = cascadePath;
-    this->videoPath = videoPath;
+    if (sourceType == source::type::video) {
+        this->sourcePath = sourcePath;
+    } else {
+        this->sourcePath = sourcePath;
+    }
 }
 
 inline FaceDetector::~FaceDetector() {
@@ -41,7 +49,7 @@ inline FaceDetector::~FaceDetector() {
 }
 
 inline void FaceDetector::openCamera() {
-    this->capture = utility::createCapture(this->videoPath);
+    this->capture = utility::createCapture(this->sourcePath);
     cv::namedWindow(window::kTarget, 1);
 }
 
