@@ -28,7 +28,7 @@ public:
     inline void run();
 
 private:
-    const char *videoPath;
+    const char *videoPath = nullptr;
     int ceil = 0;
     CvCapture *capture = nullptr;
 
