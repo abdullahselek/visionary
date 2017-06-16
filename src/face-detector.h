@@ -61,30 +61,25 @@ inline void FaceDetector::detectInImage() {
         return;
     }
     if (this->sourcePath) {
+        // create green scalar
+        CvScalar green = cvScalar(0.0, 255.0, 0.0);
+
         IplImage *image = cvLoadImage(this->sourcePath);
         IplImage *greyImage = cvCreateImage(cvGetSize(image), IPL_DEPTH_8U, 1);
         cvCvtColor(image, greyImage, CV_RGB2GRAY);
-
-        CvScalar blue = cvScalar(255.0, 0.0, 0.0);
 
         std::vector<cv::Rect> faces;
         cv::Mat inputArray = cv::cvarrToMat(greyImage);
         cascadeClassifier.detectMultiScale(inputArray, faces, 1.1, 5, CV_HAAR_SCALE_IMAGE, cv::Size(50, 50));
         for (std::vector<cv::Rect>::iterator it = faces.begin() ; it != faces.end(); ++it) {
-            cv::Rect rect = *it;
-            CvPoint point1;
-            point1.x = rect.x;
-            point1.y = rect.y;
-            CvPoint point2;
-            point2.x = rect.x + rect.width;
-            point2.y = rect.y + rect.height;
-            // draw rectangle for the face
-            cvRectangle(image, point1, point2, blue, 2);
+            visionary::drawRectangleOnFace(it, image, green);
         }
 
+        cvShowImage(window::kTarget.c_str(), image);
+
+        // release grey image
         cvReleaseImage(&greyImage);
 
-        cvShowImage(window::kTarget.c_str(), image);
         cvWaitKey(0);
     }
 }
@@ -95,8 +90,6 @@ inline void FaceDetector::detectInVideo() {
     if (this->cascadeClassifier.empty()) {
         return;
     }
-    // color scalar for drawing rectangle
-    CvScalar green = cvScalar(0.0, 255.0, 0.0);
 
     while (true) {
         IplImage *frame = cvQueryFrame(this->capture);
@@ -104,6 +97,10 @@ inline void FaceDetector::detectInVideo() {
             std::cout << "Could not capture frame!" << std::endl;
             exit(EXIT_FAILURE);
         }
+
+        // create green scalar
+        CvScalar green = cvScalar(0.0, 255.0, 0.0);
+
         IplImage *greyImage = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);
         cvCvtColor(frame, greyImage, CV_RGB2GRAY);
         std::vector<cv::Rect> faces;
@@ -111,14 +108,7 @@ inline void FaceDetector::detectInVideo() {
         cascadeClassifier.detectMultiScale(inputArray, faces, 1.1, 5, CV_HAAR_SCALE_IMAGE, cv::Size(30, 30));
         std::cout << "Faces found : " << faces.size() << std::endl;
         for (std::vector<cv::Rect>::iterator it = faces.begin() ; it != faces.end(); ++it) {
-            cv::Rect rect = *it;
-            CvPoint point1;
-            point1.x = rect.x;
-            point1.y = rect.y;
-            CvPoint point2;
-            point2.x = rect.x + rect.width;
-            point2.y = rect.y + rect.height;
-            cvRectangle(frame, point1, point2, green, 2);
+            visionary::drawRectangleOnFace(it, frame, green);
         }
         cvShowImage(window::kTarget.c_str(), frame);
 
