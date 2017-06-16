@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/abdullahselek/visionary.svg?branch=master)](https://travis-ci.org/abdullahselek/visionary)
 
-Motion and face detection implementation with OpenCV and C++.
+Various types of detection implementations with OpenCV and C++.
 
 ## Building Repository
 
@@ -72,6 +72,38 @@ To detect face from given local video
 FaceDetector faceDetector("YOUR_CASCADE_PATH", "YOUR_VIDEO_PATH");
 faceDetector.openCamera();
 faceDetector.run();
+```
+
+### Face & Eye Detection
+
+To detect eye and face from given image
+
+```
+EyeDetector eyeDetector("YOUR_IMAGE_PATH");
+eyeDetector.setEyeCascadePath("YOUR_EYE_CASCADE_PATH");
+eyeDetector.setFaceCascadePath("YOUR_FACE_CASCADE_PATH");
+eyeDetector.prepare();
+eyeDetector.detectInImage();
+```
+
+To detect eye and face from camera
+
+```
+EyeDetector eyeDetector("YOUR_EYE_CASCADE_PATH",
+                        "YOUR_FACE_CASCADE_PATH",
+                        nullptr);
+eyeDetector.prepare();
+eyeDetector.detectInVideo();
+```
+
+To detect eye and face from given local video
+
+```
+EyeDetector eyeDetector("YOUR_EYE_CASCADE_PATH",
+                        "YOUR_FACE_CASCADE_PATH",
+                        "YOUR_VIDEO_PATH");
+eyeDetector.prepare();
+eyeDetector.detectInVideo();
 ```
 
 ### NOTE
