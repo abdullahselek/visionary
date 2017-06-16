@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
             FaceDetector faceDetector(fullCascadePath.c_str(), nullptr);
             faceDetector.openCamera();
             faceDetector.run();
-        } else {
+        } else if (run == "ei") {
             const char *eyeCascadePath = "/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
             std::string fullEyeCascadePath(currentPath);
             Utils::replaceStringInPlace(fullEyeCascadePath, "/src", "");
@@ -45,6 +45,27 @@ int main(int argc, char* argv[]) {
             eyeDetector.setFaceCascadePath(fullFaceCascadePath.c_str());
             eyeDetector.prepare();
             eyeDetector.detectInImage();
+        } else {
+            const char *eyeCascadePath = "/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
+            std::string fullEyeCascadePath(currentPath);
+            Utils::replaceStringInPlace(fullEyeCascadePath, "/src", "");
+            fullEyeCascadePath += eyeCascadePath;
+
+            const char *faceCascadePath = "/haarcascades/haarcascade_frontalface_alt2.xml";
+            std::string fullFaceCascadePath(currentPath);
+            Utils::replaceStringInPlace(fullFaceCascadePath, "/src", "");
+            fullFaceCascadePath += faceCascadePath;
+
+            const char *imagePath = "/resources/5083377.png";
+            std::string fullImagePath(currentPath);
+            Utils::replaceStringInPlace(fullImagePath, "/src", "");
+            fullImagePath += imagePath;
+
+            EyeDetector eyeDetector(fullEyeCascadePath.c_str(),
+                                    fullFaceCascadePath.c_str(),
+                                    nullptr);
+            eyeDetector.prepare();
+            eyeDetector.detectInVideo();
         }
     }
 
