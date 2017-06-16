@@ -7,6 +7,7 @@
 
 #include "opencv2/opencv.hpp"
 #include "utility.h"
+#include "constants.h"
 
 class FaceDetector {
 
@@ -22,11 +23,8 @@ private:
     const char *videoPath;
     CvCapture *capture = nullptr;
     cv::CascadeClassifier faceCascade;
-    static const std::string TARGET;
 
 };
-
-const std::string FaceDetector::TARGET = "Target";
 
 inline FaceDetector::FaceDetector() {
 
@@ -44,7 +42,7 @@ inline FaceDetector::~FaceDetector() {
 
 inline void FaceDetector::openCamera() {
     this->capture = utility::createCapture(this->videoPath);
-    cv::namedWindow(TARGET, 1);
+    cv::namedWindow(window::kTarget, 1);
 }
 
 inline void FaceDetector::run() {
@@ -78,7 +76,7 @@ inline void FaceDetector::run() {
             point2.y = rect.y + rect.height;
             cvRectangle(frame, point1, point2, green, 2);
         }
-        cvShowImage(TARGET.c_str(), frame);
+        cvShowImage(window::kTarget.c_str(), frame);
 
         // release grey image
         cvReleaseImage(&greyImage);

@@ -7,6 +7,7 @@
 
 #include "opencv2/opencv.hpp"
 #include "utility.h"
+#include "constants.h"
 
 class EyeDetector {
 
@@ -30,13 +31,10 @@ private:
     CvCapture *capture = nullptr;
     cv::CascadeClassifier eyeCascade;
     cv::CascadeClassifier faceCascade;
-    static const std::string kTarget;
 
     inline void openCamera();
 
 };
-
-const std::string EyeDetector::kTarget = "Target";
 
 inline EyeDetector::EyeDetector() {
 
@@ -80,7 +78,7 @@ inline bool EyeDetector::prepare() {
         std::cout << "Could not load face cascade classifier!" << std::endl;
         return false;
     }
-    cv::namedWindow(kTarget, 1);
+    cv::namedWindow(window::kTarget, 1);
     return true;
 }
 
@@ -125,14 +123,14 @@ inline void EyeDetector::detectInImage() {
             }
         }
 
-        cvShowImage(kTarget.c_str(), image);
+        cvShowImage(window::kTarget.c_str(), image);
         cvWaitKey(0);
     }
 }
 
 inline void EyeDetector::openCamera() {
     this->capture = utility::createCapture(this->videoPath);
-    cv::namedWindow(kTarget, 1);
+    cv::namedWindow(window::kTarget, 1);
 }
 
 inline void EyeDetector::detectInVideo() {
@@ -191,7 +189,7 @@ inline void EyeDetector::detectInVideo() {
             }
         }
 
-        cvShowImage(kTarget.c_str(), frame);
+        cvShowImage(window::kTarget.c_str(), frame);
 
         // release grey image
         cvReleaseImage(&greyImage);

@@ -8,6 +8,7 @@
 #include "opencv2/opencv.hpp"
 #include "motion-detector-internal.h"
 #include "utility.h"
+#include "constants.h"
 #include <string>
 
 class MotionDetector {
@@ -32,8 +33,6 @@ private:
     CvCapture *capture = nullptr;
 
 };
-
-static const std::string TARGET = "Target";
 
 inline MotionDetector::MotionDetector() {
 
@@ -71,7 +70,7 @@ inline int MotionDetector::getCeil() {
 
 inline void MotionDetector::openCamera() {
     this->capture = createCapture(this->videoPath);
-    cv::namedWindow(TARGET, 1);
+    cv::namedWindow(window::kTarget, 1);
 }
 
 inline CvCapture * MotionDetector::getCapture() {
@@ -147,7 +146,7 @@ inline void MotionDetector::run() {
         // Put back the current surface to 0
         currentSurface = 0;
         // display image
-        cvShowImage(TARGET.c_str(), colorImage);
+        cvShowImage(window::kTarget.c_str(), colorImage);
         // exit if ESC button pressed
         int c = cvWaitKey(1);
         if (c == 27) {
