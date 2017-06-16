@@ -6,6 +6,7 @@
 #define VISIONARY_EYE_DETECTOR_H
 
 #include "opencv2/opencv.hpp"
+#include "utility.h"
 
 class EyeDetector {
 
@@ -32,7 +33,6 @@ private:
     static const std::string kTarget;
 
     inline void openCamera();
-    inline CvCapture * createCapture(const char * videoPath);
 
 };
 
@@ -131,16 +131,8 @@ inline void EyeDetector::detectInImage() {
 }
 
 inline void EyeDetector::openCamera() {
-    this->capture = createCapture(this->videoPath);
+    this->capture = utility::createCapture(this->videoPath);
     cv::namedWindow(kTarget, 1);
-}
-
-inline CvCapture * EyeDetector::createCapture(const char * videoPath) {
-    if (videoPath != nullptr) {
-        return cvCreateFileCapture(videoPath);
-    } else {
-        return cvCreateCameraCapture(CV_CAP_ANY);
-    }
 }
 
 inline void EyeDetector::detectInVideo() {

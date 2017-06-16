@@ -6,6 +6,7 @@
 #define VISIONARY_FACE_DETECTOR_H
 
 #include "opencv2/opencv.hpp"
+#include "utility.h"
 
 class FaceDetector {
 
@@ -22,8 +23,6 @@ private:
     CvCapture *capture = nullptr;
     cv::CascadeClassifier faceCascade;
     static const std::string TARGET;
-
-    inline CvCapture * createCapture(const char * videoPath);
 
 };
 
@@ -44,16 +43,8 @@ inline FaceDetector::~FaceDetector() {
 }
 
 inline void FaceDetector::openCamera() {
-    this->capture = createCapture(this->videoPath);
+    this->capture = utility::createCapture(this->videoPath);
     cv::namedWindow(TARGET, 1);
-}
-
-inline CvCapture * FaceDetector::createCapture(const char * videoPath) {
-    if (videoPath != nullptr) {
-        return cvCreateFileCapture(videoPath);
-    } else {
-        return cvCreateCameraCapture(CV_CAP_ANY);
-    }
 }
 
 inline void FaceDetector::run() {

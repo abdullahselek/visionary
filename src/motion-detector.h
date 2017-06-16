@@ -7,6 +7,7 @@
 
 #include "opencv2/opencv.hpp"
 #include "motion-detector-internal.h"
+#include "utility.h"
 #include <string>
 
 class MotionDetector {
@@ -78,11 +79,7 @@ inline CvCapture * MotionDetector::getCapture() {
 }
 
 inline CvCapture * createCapture(const char * videoPath) {
-    if (videoPath != nullptr) {
-        return cvCreateFileCapture(videoPath);
-    } else {
-        return cvCreateCameraCapture(CV_CAP_ANY);
-    }
+    return utility::createCapture(videoPath);
 }
 
 inline void MotionDetector::run() {
