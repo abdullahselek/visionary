@@ -41,6 +41,11 @@ namespace visionary {
         cvRectangle(image, point1, point2, scalarColor, 2);
     }
 
+    inline void setCaptureFrame(CvCapture *capture, double width, double height) {
+        cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH, width);
+        cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_HEIGHT, height);
+    }
+
 }
 
 #endif //VISIONARY_UTILITY_H

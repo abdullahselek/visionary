@@ -144,6 +144,7 @@ inline void EyeDetector::detectInImage() {
 
 inline void EyeDetector::openCamera() {
     this->capture = utility::createCapture(this->sourcePath);
+    visionary::setCaptureFrame(this->capture, 480, 320);
     cv::namedWindow(window::kTarget, 1);
 }
 
