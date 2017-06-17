@@ -134,6 +134,10 @@ inline void EyeDetector::detectInImage() {
         }
 
         cvShowImage(window::kTarget.c_str(), image);
+
+        // release grey image
+        cvReleaseImage(&greyImage);
+
         cvWaitKey(0);
     }
 }
