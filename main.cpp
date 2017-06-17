@@ -12,7 +12,7 @@ void detectMotion() {
 
 void detectFaceInVideo(const char *currentPath) {
     const char *cascadePath = "/haarcascades/haarcascade_frontalface_alt2.xml";
-    std::__1::string fullCascadePath(currentPath);
+    std::string fullCascadePath(currentPath);
     Utils::replaceStringInPlace(fullCascadePath, "/src", "");
     fullCascadePath += cascadePath;
 
@@ -23,12 +23,12 @@ void detectFaceInVideo(const char *currentPath) {
 
 void detectFaceInImage(const char *currentPath) {
     const char *cascadePath = "/haarcascades/haarcascade_frontalface_alt2.xml";
-    std::__1::string fullCascadePath(currentPath);
+    std::string fullCascadePath(currentPath);
     Utils::replaceStringInPlace(fullCascadePath, "/src", "");
     fullCascadePath += cascadePath;
 
     const char *imagePath = "/resources/5083377.png";
-    std::__1::string fullImagePath(currentPath);
+    std::string fullImagePath(currentPath);
     Utils::replaceStringInPlace(fullImagePath, "/src", "");
     fullImagePath += imagePath;
 
@@ -38,17 +38,17 @@ void detectFaceInImage(const char *currentPath) {
 
 void detectFaceEyeInImage(const char *currentPath) {
     const char *eyeCascadePath = "/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
-    std::__1::string fullEyeCascadePath(currentPath);
+    std::string fullEyeCascadePath(currentPath);
     Utils::replaceStringInPlace(fullEyeCascadePath, "/src", "");
     fullEyeCascadePath += eyeCascadePath;
 
     const char *faceCascadePath = "/haarcascades/haarcascade_frontalface_alt2.xml";
-    std::__1::string fullFaceCascadePath(currentPath);
+    std::string fullFaceCascadePath(currentPath);
     Utils::replaceStringInPlace(fullFaceCascadePath, "/src", "");
     fullFaceCascadePath += faceCascadePath;
 
     const char *imagePath = "/resources/5083377.png";
-    std::__1::string fullImagePath(currentPath);
+    std::string fullImagePath(currentPath);
     Utils::replaceStringInPlace(fullImagePath, "/src", "");
     fullImagePath += imagePath;
 
@@ -61,17 +61,17 @@ void detectFaceEyeInImage(const char *currentPath) {
 
 void detectFaceEyeInVideo(const char *currentPath) {
     const char *eyeCascadePath = "/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
-    std::__1::string fullEyeCascadePath(currentPath);
+    std::string fullEyeCascadePath(currentPath);
     Utils::replaceStringInPlace(fullEyeCascadePath, "/src", "");
     fullEyeCascadePath += eyeCascadePath;
 
     const char *faceCascadePath = "/haarcascades/haarcascade_frontalface_alt2.xml";
-    std::__1::string fullFaceCascadePath(currentPath);
+    std::string fullFaceCascadePath(currentPath);
     Utils::replaceStringInPlace(fullFaceCascadePath, "/src", "");
     fullFaceCascadePath += faceCascadePath;
 
     const char *imagePath = "/resources/5083377.png";
-    std::__1::string fullImagePath(currentPath);
+    std::string fullImagePath(currentPath);
     Utils::replaceStringInPlace(fullImagePath, "/src", "");
     fullImagePath += imagePath;
 
