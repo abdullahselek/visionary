@@ -61,16 +61,21 @@ motionDetector.run();
 To detect face from camera
 
 ```
-FaceDetector faceDetector("YOUR_CASCADE_PATH", nullptr);
-faceDetector.openCamera();
+FaceDetector faceDetector("YOUR_CASCADE_PATH", source::type::camera, nullptr);
 faceDetector.run();
 ```
 
 To detect face from given local video
 
 ```
-FaceDetector faceDetector("YOUR_CASCADE_PATH", "YOUR_VIDEO_PATH");
-faceDetector.openCamera();
+FaceDetector faceDetector("YOUR_CASCADE_PATH", source::type::video, "YOUR_VIDEO_PATH");
+faceDetector.run();
+```
+
+To detect face from given image
+
+```
+FaceDetector faceDetector("YOUR_CASCADE_PATH", source::type::image, "YOUR_IMAGE_PATH");
 faceDetector.run();
 ```
 
@@ -79,11 +84,12 @@ faceDetector.run();
 To detect eye and face from given image
 
 ```
-EyeDetector eyeDetector("YOUR_IMAGE_PATH");
+EyeDetector eyeDetector;
 eyeDetector.setEyeCascadePath("YOUR_EYE_CASCADE_PATH");
 eyeDetector.setFaceCascadePath("YOUR_FACE_CASCADE_PATH");
-eyeDetector.prepare();
-eyeDetector.detectInImage();
+eyeDetector.setSourcePath("YOUR_IMAGE_PATH");
+eyeDetector.setSourceType(source::type::image);
+eyeDetector.run();
 ```
 
 To detect eye and face from camera
@@ -91,9 +97,9 @@ To detect eye and face from camera
 ```
 EyeDetector eyeDetector("YOUR_EYE_CASCADE_PATH",
                         "YOUR_FACE_CASCADE_PATH",
+                        source::type::camera,
                         nullptr);
-eyeDetector.prepare();
-eyeDetector.detectInVideo();
+eyeDetector.run();
 ```
 
 To detect eye and face from given local video
@@ -101,10 +107,23 @@ To detect eye and face from given local video
 ```
 EyeDetector eyeDetector("YOUR_EYE_CASCADE_PATH",
                         "YOUR_FACE_CASCADE_PATH",
+                        source::type::video,
                         "YOUR_VIDEO_PATH");
-eyeDetector.prepare();
-eyeDetector.detectInVideo();
+eyeDetector.run();
 ```
+
+## Sample Videos & Images
+
+### Videos
+
+[Motion Detection](https://youtu.be/xgXo35C3IQE)<br />
+[Face Detection](https://youtu.be/bf5NtpbNbYg)<br />
+[Face & Eyes Detection](https://youtu.be/GFfjjkKZwhs)<br />
+
+### Images
+
+![Face Detection](/samples/face_detection.png)<br />
+![Face & Eyes Detection](/samples/face_eye_detection.png)
 
 ### NOTE
 
