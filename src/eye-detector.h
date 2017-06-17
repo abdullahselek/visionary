@@ -144,14 +144,6 @@ inline void EyeDetector::openCamera() {
 }
 
 inline void EyeDetector::detectInVideo() {
-    if (this->faceCascade.empty()) {
-        std::cout << "Face cascade did not instantiated!" << std::endl;
-        exit(EXIT_FAILURE);
-    }
-    if (this->eyeCascade.empty()) {
-        std::cout << "Eye cascade did not instantiated!" << std::endl;
-        exit(EXIT_FAILURE);
-    }
     // open camera or load video
     openCamera();
 
