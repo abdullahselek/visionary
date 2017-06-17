@@ -21,7 +21,7 @@ namespace utility {
 
 namespace visionary {
 
-    inline void drawRectangleOnFace(std::vector<cv::Rect>::iterator it, IplImage *image, CvScalar scalarScolor) {
+    inline void drawRectangle(std::vector<cv::Rect>::iterator it, IplImage *image, CvScalar scalarColor) {
         // create points
         cv::Rect rect = *it;
         CvPoint point1;
@@ -31,7 +31,14 @@ namespace visionary {
         point2.x = rect.x + rect.width;
         point2.y = rect.y + rect.height;
         // draw rectangle for the face
-        cvRectangle(image, point1, point2, scalarScolor, 2);
+        cvRectangle(image, point1, point2, scalarColor, 2);
+    }
+
+    inline void drawRectangle(CvSeq *contours, IplImage *image, CvScalar scalarColor) {
+        CvRect boundingRect = cvBoundingRect(contours);
+        CvPoint point1 = cvPoint(boundingRect.x, boundingRect.y);
+        CvPoint point2 = cvPoint(boundingRect.x + boundingRect.width, boundingRect.y + boundingRect.height);
+        cvRectangle(image, point1, point2, scalarColor, 2);
     }
 
 }

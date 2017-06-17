@@ -131,10 +131,7 @@ inline void MotionDetector::run() {
         // For all contours compute the area
         while (contours) {
             currentSurface += cvContourArea(contours);
-            CvRect boundingRect = cvBoundingRect(contours);
-            CvPoint point1 = cvPoint(boundingRect.x, boundingRect.y);
-            CvPoint point2 = cvPoint(boundingRect.x + boundingRect.width, boundingRect.y + boundingRect.height);
-            cvRectangle(colorImage, point1, point2, green, 2);
+            visionary::drawRectangle(contours, colorImage, green);
             contours = contours->h_next;
         }
 

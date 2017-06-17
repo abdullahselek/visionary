@@ -72,7 +72,7 @@ inline void FaceDetector::detectInImage() {
         cv::Mat inputArray = cv::cvarrToMat(greyImage);
         cascadeClassifier.detectMultiScale(inputArray, faces, 1.1, 5, CV_HAAR_SCALE_IMAGE, cv::Size(50, 50));
         for (std::vector<cv::Rect>::iterator it = faces.begin() ; it != faces.end(); ++it) {
-            visionary::drawRectangleOnFace(it, image, green);
+            visionary::drawRectangle(it, image, green);
         }
 
         cvShowImage(window::kTarget.c_str(), image);
@@ -108,7 +108,7 @@ inline void FaceDetector::detectInVideo() {
         cascadeClassifier.detectMultiScale(inputArray, faces, 1.1, 5, CV_HAAR_SCALE_IMAGE, cv::Size(30, 30));
         std::cout << "Faces found : " << faces.size() << std::endl;
         for (std::vector<cv::Rect>::iterator it = faces.begin() ; it != faces.end(); ++it) {
-            visionary::drawRectangleOnFace(it, frame, green);
+            visionary::drawRectangle(it, frame, green);
         }
         cvShowImage(window::kTarget.c_str(), frame);
 
