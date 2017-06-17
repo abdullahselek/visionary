@@ -16,9 +16,8 @@ void detectFaceInVideo(const char *currentPath) {
     Utils::replaceStringInPlace(fullCascadePath, "/src", "");
     fullCascadePath += cascadePath;
 
-    FaceDetector faceDetector(fullCascadePath.c_str(), source::video, nullptr);
-    faceDetector.openCamera();
-    faceDetector.detectInVideo();
+    FaceDetector faceDetector(fullCascadePath.c_str(), source::camera, nullptr);
+    faceDetector.run();
 }
 
 void detectFaceInImage(const char *currentPath) {
@@ -33,7 +32,7 @@ void detectFaceInImage(const char *currentPath) {
     fullImagePath += imagePath;
 
     FaceDetector faceDetector(fullCascadePath.c_str(), source::image, fullImagePath.c_str());
-    faceDetector.detectInImage();
+    faceDetector.run();
 }
 
 void detectFaceEyeInImage(const char *currentPath) {

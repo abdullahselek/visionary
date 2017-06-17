@@ -17,15 +17,18 @@ public:
                  source::type sourceType,
                  const char *sourcePath);
     ~FaceDetector();
-    inline void openCamera();
-    inline void detectInImage();
-    inline void detectInVideo();
+    void run();
 
 private:
     std::string cascadePath;
+    source::type sourceType;
     const char *sourcePath;
     CvCapture *capture = nullptr;
     cv::CascadeClassifier cascadeClassifier;
+
+    inline void openCamera();
+    inline void detectInImage();
+    inline void detectInVideo();
 
 };
 
@@ -37,16 +40,25 @@ inline FaceDetector::FaceDetector(std::string cascadePath,
                                   source::type sourceType,
                                   const char *sourcePath) {
     this->cascadePath = cascadePath;
-    if (sourceType == source::type::video) {
-        this->sourcePath = sourcePath;
-    } else {
-        this->sourcePath = sourcePath;
-    }
+    this->sourceType = sourceType;
+    this->sourcePath = sourcePath;
 }
 
 inline FaceDetector::~FaceDetector() {
     cvReleaseCapture(&capture);
     cvDestroyAllWindows();
+}
+
+inline void FaceDetector::run() {
+    switch (this->sourceType) {
+        case source::type::image:
+            detectInImage();
+            break;
+        case source::type::video:
+        case source::type::camera:
+            detectInVideo();
+            break;
+    }
 }
 
 inline void FaceDetector::openCamera() {
@@ -58,7 +70,8 @@ inline void FaceDetector::detectInImage() {
     assert(!cascadePath.empty());
     this->cascadeClassifier = cv::CascadeClassifier(this->cascadePath);
     if (this->cascadeClassifier.empty()) {
-        return;
+        std::cout << "Could not load cascade classifier!" << std::endl;
+        exit(EXIT_FAILURE);
     }
     if (this->sourcePath) {
         // create green scalar
@@ -88,8 +101,12 @@ inline void FaceDetector::detectInVideo() {
     assert(!cascadePath.empty());
     this->cascadeClassifier = cv::CascadeClassifier(this->cascadePath);
     if (this->cascadeClassifier.empty()) {
-        return;
+        std::cout << "Could not load cascade classifier!" << std::endl;
+        exit(EXIT_FAILURE);
     }
+
+    // open camera or load video
+    this->openCamera();
 
     while (true) {
         IplImage *frame = cvQueryFrame(this->capture);

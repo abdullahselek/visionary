@@ -15,7 +15,8 @@ namespace source {
 
     enum type {
         image,
-        video
+        video,
+        camera
     };
 
 }
