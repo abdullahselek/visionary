@@ -17,7 +17,7 @@ public:
                  source::type sourceType,
                  const char *sourcePath);
     ~FaceDetector();
-    void run();
+    inline void run();
 
 private:
     std::string cascadePath;

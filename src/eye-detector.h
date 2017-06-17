@@ -13,26 +13,31 @@ class EyeDetector {
 
 public:
     EyeDetector();
-    EyeDetector(std::string eyeCascadePath, std::string faceCascadePath, const char *videoPath);
-    EyeDetector(const char *imagePath);
+    EyeDetector(std::string eyeCascadePath,
+                std::string faceCascadePath,
+                source::type sourceType,
+                const char *sourcePath);
     ~EyeDetector();
 
     inline void setEyeCascadePath(std::string eyeCascadePath);
     inline void setFaceCascadePath(std::string faceCascadePath);
-    inline bool prepare();
-    inline void detectInImage();
-    inline void detectInVideo();
+    inline void setSourceType(source::type sourceType);
+    inline void setSourcePath(const char *sourcePath);
+    inline void run();
 
 private:
     std::string eyeCascadePath;
     std::string faceCascadePath;
-    const char *videoPath;
-    const char *imagePath;
+    const char *sourcePath;
+    source::type sourceType;
     CvCapture *capture = nullptr;
     cv::CascadeClassifier eyeCascade;
     cv::CascadeClassifier faceCascade;
 
     inline void openCamera();
+    inline bool prepare();
+    inline void detectInImage();
+    inline void detectInVideo();
 
 };
 
@@ -42,14 +47,12 @@ inline EyeDetector::EyeDetector() {
 
 inline EyeDetector::EyeDetector(std::string eyeCascadePath,
                                 std::string faceCascadePath,
-                                const char *videoPath) {
+                                source::type sourceType,
+                                const char *sourcePath) {
     this->eyeCascadePath = eyeCascadePath;
     this->faceCascadePath = faceCascadePath;
-    this->videoPath = videoPath;
-}
-
-inline EyeDetector::EyeDetector(const char *imagePath) {
-    this->imagePath = imagePath;
+    this->sourcePath = sourcePath;
+    this->sourceType = sourceType;
 }
 
 inline EyeDetector::~EyeDetector() {
@@ -63,6 +66,29 @@ inline void EyeDetector::setEyeCascadePath(std::string eyeCascadePath) {
 
 inline void EyeDetector::setFaceCascadePath(std::string faceCascadePath) {
     this->faceCascadePath = faceCascadePath;
+}
+
+inline void EyeDetector::setSourceType(source::type sourceType) {
+    this->sourceType = sourceType;
+}
+
+inline void EyeDetector::setSourcePath(const char *sourcePath) {
+    this->sourcePath = sourcePath;
+}
+
+inline void EyeDetector::run() {
+    if (!prepare()) {
+        exit(EXIT_FAILURE);
+    }
+    switch (this->sourceType) {
+        case source::type::image:
+            detectInImage();
+            break;
+        case source::type::video:
+        case source::type::camera:
+            detectInVideo();
+            break;
+    }
 }
 
 inline bool EyeDetector::prepare() {
@@ -83,8 +109,8 @@ inline bool EyeDetector::prepare() {
 }
 
 inline void EyeDetector::detectInImage() {
-    if (this->imagePath) {
-        IplImage *image = cvLoadImage(this->imagePath);
+    if (this->sourcePath) {
+        IplImage *image = cvLoadImage(this->sourcePath);
         IplImage *greyImage = cvCreateImage(cvGetSize(image), IPL_DEPTH_8U, 1);
         cvCvtColor(image, greyImage, CV_RGB2GRAY);
 
@@ -113,7 +139,7 @@ inline void EyeDetector::detectInImage() {
 }
 
 inline void EyeDetector::openCamera() {
-    this->capture = utility::createCapture(this->videoPath);
+    this->capture = utility::createCapture(this->sourcePath);
     cv::namedWindow(window::kTarget, 1);
 }
 
@@ -126,7 +152,7 @@ inline void EyeDetector::detectInVideo() {
         std::cout << "Eye cascade did not instantiated!" << std::endl;
         exit(EXIT_FAILURE);
     }
-    // open camera
+    // open camera or load video
     openCamera();
 
     // colors for drawing
