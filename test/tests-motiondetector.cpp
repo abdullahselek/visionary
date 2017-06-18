@@ -6,7 +6,6 @@
 #include "opencv2/opencv.hpp"
 #include "../src/motion-detector.h"
 #include "mock-motion-detector.h"
-#include "utils.h"
 
 class MotionDetectorTests : public ::testing::Test {
 
@@ -54,10 +53,10 @@ TEST_F(MotionDetectorTests, InitiateWithCeil) {
 
 TEST_F(MotionDetectorTests, CreateCapture) {
     MockMotionDetector mockMotionDetector;
-    const char *currentPath = Utils::currentDirectory();
+    const char *currentPath = utility::currentDirectory();
     const char *videoPath = "/resources/SampleVideo.mp4";
     std::string fullPath(currentPath);
-    Utils::replaceStringInPlace(fullPath, "/test", "");
+    utility::replaceStringInPlace(fullPath, "/test", "");
     fullPath += videoPath;
     std::cout << "Video File Path " << fullPath << std::endl;
     EXPECT_CALL(mockMotionDetector, createCapture())
@@ -68,10 +67,10 @@ TEST_F(MotionDetectorTests, CreateCapture) {
 }
 
 TEST_F(MotionDetectorTests, OpenCamera) {
-    const char *currentPath = Utils::currentDirectory();
+    const char *currentPath = utility::currentDirectory();
     const char *videoPath = "/resources/SampleVideo.mp4";
     std::string fullPath(currentPath);
-    Utils::replaceStringInPlace(fullPath, "/test", "");
+    utility::replaceStringInPlace(fullPath, "/test", "");
     fullPath += videoPath;
     std::cout << "Video File Path " << fullPath << std::endl;
     motionDetector = new MotionDetector(fullPath.c_str(), 15);

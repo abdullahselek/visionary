@@ -4,7 +4,6 @@
 
 #include "gtest/gtest.h"
 #include "../src/face-detector.h"
-#include "utils.h"
 
 class FaceDetectorTests: public ::testing::Test {
 
@@ -36,16 +35,16 @@ TEST_F(FaceDetectorTests, Instantiate) {
 }
 
 TEST_F(FaceDetectorTests, InstantiateWithParameters) {
-    const char *currentPath = Utils::currentDirectory();
+    const char *currentPath = utility::currentDirectory();
 
     const char *cascadePath = "/haarcascades/haarcascade_profileface.xml";
     std::string fullCascadePath(currentPath);
-    Utils::replaceStringInPlace(fullCascadePath, "/test", "");
+    utility::replaceStringInPlace(fullCascadePath, "/test", "");
     fullCascadePath += cascadePath;
 
     const char *videoPath = "/resources/SampleVideo.mp4";
     std::string fullVideoPath(currentPath);
-    Utils::replaceStringInPlace(fullVideoPath, "/test", "");
+    utility::replaceStringInPlace(fullVideoPath, "/test", "");
     fullVideoPath += videoPath;
 
     faceDetector = new FaceDetector(fullVideoPath, source::type::video, fullCascadePath.c_str());

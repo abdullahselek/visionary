@@ -4,7 +4,6 @@
 
 #include "gtest/gtest.h"
 #include "../src/eye-detector.h"
-#include "utils.h"
 
 class EyeDetectorTests : public ::testing::Test {
 
