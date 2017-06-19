@@ -127,4 +127,4 @@ eyeDetector.run();
 
 ### NOTE
 
-OpenCV should be installed to your computer before running, take a look at .travis.yml file for sample installation for macOS and Linux.
+OpenCV should be installed to your computer before running, take a look at [.travis.yml](https://github.com/abdullahselek/visionary/blob/master/.travis.yml) file for sample installation for macOS and Linux.
