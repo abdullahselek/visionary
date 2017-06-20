@@ -24,7 +24,7 @@ namespace tracker {
     };
 
     static const char * TrackerValues[] = { "MIL", "BOOSTING" };
-    const char * getCharForEnum(int enumVal) {
+    inline const char * getCharForEnum(int enumVal) {
         return TrackerValues[enumVal];
     }
 }
