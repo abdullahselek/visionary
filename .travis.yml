@@ -32,7 +32,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mkdir release ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd release ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pwd ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-3.2.0/modules ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=/home/travis/opencv_contrib-3.2.0/modules .. ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make -j8 ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo make install ; fi
 
