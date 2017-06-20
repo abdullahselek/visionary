@@ -14,7 +14,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew tap homebrew/science ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then rm -rf /usr/local/bin/f2py ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then rm -rf /usr/local/lib/python2.7 ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install opencv3 ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install opencv3 --with-contrib --with-ffmpeg ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo 'export PATH="/usr/local/opt/opencv3/bin:$PATH"' >> ~/.bash_profile ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source ~/.bash_profile ; fi
   # linux commands
@@ -24,10 +24,12 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd ~ ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.2.0.zip ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then unzip opencv.zip ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.2.0.zip ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then unzip opencv_contrib.zip ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd opencv-3.2.0 ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mkdir release ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd release ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-3.2.0/modules ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make -j8 ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo make install ; fi
 
