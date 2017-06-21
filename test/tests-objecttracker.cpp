@@ -35,7 +35,7 @@ TEST_F(ObjectTrackerTests, Instantiate) {
 }
 
 TEST_F(ObjectTrackerTests, InstantiateWithType) {
-    objectTracker = new ObjectTracker(tracker::type::mil);
+    objectTracker = new ObjectTracker(tracker::type::mil, source::type::video, "");
     EXPECT_TRUE(objectTracker != nullptr);
     delete objectTracker;
 }

@@ -13,11 +13,14 @@ class ObjectTracker {
 
 public:
     ObjectTracker();
-    ObjectTracker(tracker::type trackerType);
+    ObjectTracker(tracker::type trackerType,
+                  source::type sourceType,
+                  const char *videoPath);
     ~ObjectTracker();
 
 private:
     cv::Ptr<cv::Tracker> tracker;
+    const char *videoPath;
 
 };
 
@@ -25,8 +28,12 @@ inline ObjectTracker::ObjectTracker() {
 
 }
 
-inline ObjectTracker::ObjectTracker(tracker::type trackerType) {
-    tracker = cv::Tracker::create(tracker::getCharForEnum(trackerType));
+inline ObjectTracker::ObjectTracker(tracker::type trackerType,
+                                    source::type sourceType,
+                                    const char *videoPath) {
+    assert(sourceType != source::type::image && "Unsupported type for object tracker!");
+    this->tracker = cv::Tracker::create(tracker::getCharForEnum(trackerType));
+    this->videoPath = videoPath;
 }
 
 inline ObjectTracker::~ObjectTracker() {
