@@ -2,6 +2,7 @@
 
 if [[ $TRAVIS_OS_NAME == 'linux' ]]; then
 
+    pwd
     sudo apt-get install build-essential
     sudo apt-get install cmake libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
     cd ~
