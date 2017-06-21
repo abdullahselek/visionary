@@ -1,6 +1,8 @@
 #include "src/motion-detector.h"
 #include "src/face-detector.h"
 #include "src/eye-detector.h"
+#include "src/object-tracker.h"
+#include "opencv2/opencv.hpp"
 
 void detectMotion() {
     MotionDetector motionDetector;
@@ -81,6 +83,19 @@ void detectFaceEyeInVideo(const char *currentPath) {
     eyeDetector.run();
 }
 
+void trackObjectInVideo(const char *currentPath) {
+    const char *videoPath = "/resources/SampleVideo.mp4";
+    std::string videoFullPath(currentPath);
+    utility::replaceStringInPlace(videoFullPath, "/src", "");
+    videoFullPath += videoPath;
+
+    ObjectTracker objectTracker(tracker::type::mil,
+                                source::type::video,
+                                videoFullPath.c_str());
+    cv::Rect2d boundingBox(287, 23, 86, 320);
+    objectTracker.run(boundingBox);
+}
+
 int main(int argc, char* argv[]) {
     if (argc != 2) {
         return 0;
@@ -96,8 +111,10 @@ int main(int argc, char* argv[]) {
             detectFaceInImage(currentPath);
         } else if (run == "ev") {
             detectFaceEyeInVideo(currentPath);
-        } else {
+        } else if (run == "ei") {
             detectFaceEyeInImage(currentPath);
+        } else {
+            trackObjectInVideo(currentPath);
         }
     }
 
