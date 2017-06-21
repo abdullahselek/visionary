@@ -19,8 +19,8 @@ namespace source {
 
 namespace tracker {
     enum type {
-        MIL,
-        BOOSTING
+        mil,
+        boosting
     };
 
     static const char * TrackerValues[] = { "MIL", "BOOSTING" };
