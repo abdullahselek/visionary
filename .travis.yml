@@ -16,8 +16,7 @@ before_install:
   - travis_wait 60 .ci/installOnLinux.sh
 
 before_script:
-#  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd .. ; cd .. ; cd build/abdullahselek/visionary/ ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd home/travis/abdullahselek/visionary/ ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd /home/travis/build/abdullahselek/visionary/ ; fi
   - cmake .
 
 script:
