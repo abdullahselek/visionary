@@ -9,5 +9,6 @@ if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
     brew install opencv3 --with-contrib --with-ffmpeg
     echo 'export PATH="/usr/local/opt/opencv3/bin:$PATH"' >> ~/.bash_profile
     source ~/.bash_profile
+    cat ~/.bash_profile
 
 fi
