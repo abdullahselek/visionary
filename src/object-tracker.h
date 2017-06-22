@@ -28,6 +28,7 @@ private:
 
     inline void openCamera();
     inline void trackInVideo(cv::Rect2d boundingBox);
+    inline void trackInCamera(cv::Rect2d boundingBox);
 
 };
 
@@ -58,7 +59,7 @@ inline void ObjectTracker::openCamera() {
 }
 
 inline void ObjectTracker::trackInVideo(cv::Rect2d boundingBox) {
-    // open camera or load video
+    // load video
     openCamera();
 
     // colors for drawing
@@ -91,12 +92,48 @@ inline void ObjectTracker::trackInVideo(cv::Rect2d boundingBox) {
     }
 }
 
+inline void ObjectTracker::trackInCamera(cv::Rect2d boundingBox) {
+    // open camera
+    openCamera();
+
+    // colors for drawing
+    CvScalar green = cvScalar(0.0, 255.0, 0.0);
+
+    // Check video is open
+    if(!this->capture.isOpened()) {
+        std::cout << "Could not read from camera!" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    // Read first frame.
+    cv::Mat frame;
+    this->capture.read(frame);
+
+    // Initialize tracker with first frame and bounding box
+    tracker->init(frame, boundingBox);
+
+    while (true) {
+        this->capture.read(frame);
+        // Update tracking results
+        tracker->update(frame, boundingBox);
+        // Draw bounding box
+        rectangle(frame, boundingBox, green, 2, 1);
+        // Display result
+        imshow(window::kTarget, frame);
+        int c = cv::waitKey(1);
+        if (c == 27) {
+            break;
+        }
+    }
+}
+
 inline void ObjectTracker::run(cv::Rect2d boundingBox) {
     switch (this->sourceType) {
         case source::type::video:
             this->trackInVideo(boundingBox);
             break;
         case source::type::camera:
+            this->trackInCamera(boundingBox);
             break;
         case source::type::image:
             break;
