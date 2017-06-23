@@ -12,6 +12,8 @@ os:
 before_install:
   # osx
   - travis_wait 60 .ci/installOnOSX.sh
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo 'export PATH="/usr/local/opt/opencv3/bin:$PATH"' >> ~/.bash_profile ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source ~/.bash_profile ; fi
   # linux
   - travis_wait 60 .ci/installOnLinux.sh
 
