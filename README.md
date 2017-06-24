@@ -112,6 +112,27 @@ EyeDetector eyeDetector("YOUR_EYE_CASCADE_PATH",
 eyeDetector.run();
 ```
 
+### Object Tracking
+
+Object tracking from camera
+
+```
+ObjectTracker objectTracker(tracker::type::mil,
+                            source::type::camera,
+                            nullptr);
+cv::Rect2d boundingBox(x, y, width, height);
+objectTracker.run(boundingBox);
+```
+
+Object tracking from given local video
+```
+ObjectTracker objectTracker(tracker::type::mil,
+                            source::type::video,
+                            "YOUR_VIDEO_PATH");
+cv::Rect2d boundingBox(x, y, width, height);
+objectTracker.run(boundingBox);
+```
+
 ## Sample Videos & Images
 
 ### Videos
