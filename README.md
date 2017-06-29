@@ -61,21 +61,27 @@ motionDetector.run();
 To detect face from camera
 
 ```
-FaceDetector faceDetector("YOUR_CASCADE_PATH", source::type::camera, nullptr);
+FaceDetector faceDetector("YOUR_CASCADE_PATH",
+                          source::type::camera,
+                          nullptr);
 faceDetector.run();
 ```
 
 To detect face from given local video
 
 ```
-FaceDetector faceDetector("YOUR_CASCADE_PATH", source::type::video, "YOUR_VIDEO_PATH");
+FaceDetector faceDetector("YOUR_CASCADE_PATH",
+                          source::type::video,
+                          "YOUR_VIDEO_PATH");
 faceDetector.run();
 ```
 
 To detect face from given image
 
 ```
-FaceDetector faceDetector("YOUR_CASCADE_PATH", source::type::image, "YOUR_IMAGE_PATH");
+FaceDetector faceDetector("YOUR_CASCADE_PATH",
+                          source::type::image,
+                          "YOUR_IMAGE_PATH");
 faceDetector.run();
 ```
 
