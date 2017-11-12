@@ -21,7 +21,7 @@ public:
     void run(cv::Rect2d boundingBox);
 
 private:
-    cv::Ptr<cv::Tracker> tracker;
+    cv::Tracker *tracker;
     const char *sourcePath;
     cv::VideoCapture capture;
     source::type sourceType;
@@ -40,7 +40,6 @@ inline ObjectTracker::ObjectTracker(tracker::type trackerType,
                                     source::type sourceType,
                                     const char *sourcePath) {
     assert(sourceType != source::type::image && "Unsupported type for object tracker!");
-    this->tracker = cv::Tracker::create(tracker::getCharForEnum(trackerType));
     this->sourcePath = sourcePath;
     this->sourceType = sourceType;
 }
